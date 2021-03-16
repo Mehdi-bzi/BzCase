@@ -1,0 +1,68 @@
+<p>home-view works!</p>
+
+
+<p *ngFor="let a of ads">
+    {{a.title}}
+</p>
+
+<form class="mt-5">
+    <form [formGroup]="homeSearchForm" (ngSubmit)="onSubmitEditedModelForm()">        
+        <label>Marque</label>
+        <select class="form-control" 
+                formControlName="brand">
+            <option value="" selected (click)="onClickFilterByBrand('choisir')">Choisir</option>
+            <option *ngFor="let b of brands" [value]="b.id"
+            (click)="onClickFilterByBrand()">
+            
+                {{b.id}}
+            </option>
+        </select>
+
+        <label>Modèle</label>
+        <select class="form-control"
+                formControlName="model"
+                *ngIf="this.homeSearchForm.controls.brand.dirty"
+                >
+            <option value="" selected>Choisir</option>
+            <option *ngFor="let m of models" [value]="m.id"
+            >
+                {{m.name}}, {{m.brand}}
+            </option>
+        </select>
+    
+    <!-- </div>
+        <div class="form-control-feedback text-danger"
+         *ngIf="(newCarForm.controls.brandId.dirty || newCarForm.controls.brandId.touched)
+                && newCarForm.controls.brandId.invalid
+                && newCarForm.controls.brandId.errors.required">
+        Merci de choisir une marque.
+    </div> -->
+    <!-- <div class="form-control-feedback text-danger"
+         *ngIf="(newCarForm.controls.brandId.dirty || newCarForm.controls.brandId.touched)
+                && newCarForm.controls.brandId.invalid
+                && newCarForm.controls.brandId.errors.required">
+        Merci de choisir une marque.
+    </div> -->
+
+
+<!-- <div class="form-group">
+    <div class="text-left">
+        <label>Marque</label>
+        <select class="form-control"
+                formControlName="brandId"
+                [(ngModel)]="car.brandId"
+                #sB
+                (change)="getModelsForBrandId(sB.value)">
+            <option value="" selected>Choisir</option>
+            <option *ngFor="let u of users" [value]="u.id">{{u.name}}
+            </option>
+        </select>
+    </div>
+    <div class="form-control-feedback text-danger"
+         *ngIf="(newCarForm.controls.brandId.dirty || newCarForm.controls.brandId.touched)
+                && newCarForm.controls.brandId.invalid
+                && newCarForm.controls.brandId.errors.required">
+        Merci de choisir une marque.
+    </div>
+</div> -->
+</form>
