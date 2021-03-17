@@ -3,7 +3,7 @@ import { ModelService } from './../../services/model/model.service';
 import { BrandService } from './../../services/brand/brand.service';
 import { AdsService } from './../../services/ads/ads.service';
 import { Component, OnInit } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { Subscription, BehaviorSubject } from 'rxjs';
  import { FormBuilder, FormGroup, FormsModule ,Validators } from '@angular/forms';
 
 @Component({
@@ -12,6 +12,7 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./home-view.component.css']
 })
 export class HomeViewComponent implements OnInit {
+
 
   ads:Array<[Object]>;
   brands:Array<[Object]>;
@@ -25,6 +26,9 @@ export class HomeViewComponent implements OnInit {
   brandSubscription: Subscription;  
   modelSubscription: Subscription;
   gasolineSubscription: Subscription;
+  adsShowables: Subscription;
+
+  adsToDisplay$: BehaviorSubject<Array<Ad>>;;
 
    homeSearchForm: FormGroup;
 
@@ -32,10 +36,12 @@ export class HomeViewComponent implements OnInit {
               private brandService:BrandService,
               private modelService:ModelService,
               private gasolineService:GasolineService,
-              private fb:FormBuilder
-              ) { }
+              private fb:FormBuilder,              
+              ) { this.adsToDisplay$ = new BehaviorSubject([]); }
 
   ngOnInit(): void {
+
+
     this.adsService.getAds();  
     this.adSubscription = this.adsService.adsSubject
                             .subscribe(
@@ -80,13 +86,19 @@ export class HomeViewComponent implements OnInit {
 // Fin ngOnInit début des fonctions onClick
 
 onBrandSelected(value){
-      if(value === 'Choisir') {
-        this.modelsShowable = this.models;
+      if(value == "Choisir") {
+        this.adsShowable = this.adsShowable;
+        console.log("on est egal choisir")
     }
     else {
+      
         this.modelsShowable = this.models.filter(model => model.brand === "/api/brands/"+value);
+        this.adsToDisplay$.next(this.ads.filter(ad => ad.brand === "/api/brands/"+value));
+        this.adsToDisplay$.subscribe(res=>{
+          this.adsShowable = res;
+        })
     }
-  console.log("selected value is" + value)
+  console.log("adshowable brand is" + this.adsShowable)
 }
 
 onModelSelected(valueBrand, valueModel){
@@ -99,17 +111,22 @@ onModelSelected(valueBrand, valueModel){
 console.log("brand id is" + valueBrand+" et model value is" + valueModel)
 }
 
-onGasolineSelected(vBrand, vModel,gasoline){
+onGasolineSelected(gasoline){
   if(gasoline === 'Choisir') {
     this.adsShowable = this.ads;
   }
   { 
-    this.adsShowable = this.ads.filter(ad => ad.gasoline === "/api/gasolines/"+gasoline &&
-                                       ad.model === "/api/models/"+vModel &&
-                                       ad.brand === "/api/brands/"+vBrand
-                                       );
+    // this.adsShowable = this.ads.filter(ad => ad.gasoline === "/api/gasolines/"+gasoline &&
+    //                                    ad.model === "/api/models/"+vModel &&
+    //                                    ad.brand === "/api/brands/"+vBrand
+    //                                    );
+    this.adsToDisplay$.next(this.ads.filter(ad => ad.gasoline === "/api/gasolines/"+gasoline));
+    this.adsToDisplay$.subscribe(res=>{
+      this.adsShowable = res;
+    })
   }
-console.log("gasoline id is" + gasoline)
+  // console.log("gasoline id is" + gasoline)
+  console.log("adshowable is" + this.adsShowable)
 }
 
   // isRightBrand(){

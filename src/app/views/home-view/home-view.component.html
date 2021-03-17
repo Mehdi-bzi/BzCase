@@ -31,7 +31,7 @@
         <label>Gasoline</label>
         <select class="form-control"
                 formControlName="gasoline"
-                (change)="onGasolineSelected(homeSearchForm.value.brand, homeSearchForm.value.model, homeSearchForm.value.gasoline)"
+                (change)="onGasolineSelected(homeSearchForm.value.gasoline)"
                 >
             <option value="" selected>Choisir</option>
             <option *ngFor="let g of gasolines" [value]="g.id"
