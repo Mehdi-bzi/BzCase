@@ -1,18 +1,15 @@
 <p>home-view works!</p>
 
 
-<p *ngFor="let a of ads">
-    {{a.title}}
-</p>
-
 <form class="mt-5">
     <form [formGroup]="homeSearchForm" (ngSubmit)="onSubmitEditedModelForm()">        
         <label>Marque</label>
         <select class="form-control" 
-                formControlName="brand">
-            <option value="" selected (click)="onClickFilterByBrand('choisir')">Choisir</option>
+                formControlName="brand"
+                (change)="onBrandSelected(homeSearchForm.value.brand)">
+            <option value="" selected>Choisir</option>
             <option *ngFor="let b of brands" [value]="b.id"
-            (click)="onClickFilterByBrand()">
+            >
             
                 {{b.id}}
             </option>
@@ -22,11 +19,24 @@
         <select class="form-control"
                 formControlName="model"
                 *ngIf="this.homeSearchForm.controls.brand.dirty"
+                (change)="onModelSelected(homeSearchForm.value.brand, homeSearchForm.value.model)"
                 >
             <option value="" selected>Choisir</option>
-            <option *ngFor="let m of models" [value]="m.id"
+            <option *ngFor="let m of modelsShowable" [value]="m.id"
             >
                 {{m.name}}, {{m.brand}}
+            </option>
+        </select>
+
+        <label>Gasoline</label>
+        <select class="form-control"
+                formControlName="gasoline"
+                (change)="onGasolineSelected(homeSearchForm.value.brand, homeSearchForm.value.model, homeSearchForm.value.gasoline)"
+                >
+            <option value="" selected>Choisir</option>
+            <option *ngFor="let g of gasolines" [value]="g.id"
+            >
+                {{g.name}}, {{g.id}}
             </option>
         </select>
     
@@ -66,3 +76,16 @@
     </div>
 </div> -->
 </form>
+
+<br>
+
+<h1>Annonces</h1>
+
+<p *ngFor="let ad of adsShowable">
+    {{ad.title}} /// {{ad.gasoline}}
+</p>
+
+
+<p *ngFor="let a of ads">
+    {{a.title}} s'affiche sans condition
+</p>
