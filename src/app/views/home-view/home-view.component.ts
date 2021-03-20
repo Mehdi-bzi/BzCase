@@ -3,8 +3,11 @@ import { ModelService } from './../../services/model/model.service';
 import { BrandService } from './../../services/brand/brand.service';
 import { AdsService } from './../../services/ads/ads.service';
 import { Component, OnInit } from '@angular/core';
-import { Subscription, BehaviorSubject } from 'rxjs';
- import { FormBuilder, FormGroup, FormsModule ,Validators } from '@angular/forms';
+import { Subscription, BehaviorSubject, Observable } from 'rxjs';
+import { FormBuilder, FormGroup, FormsModule ,Validators } from '@angular/forms';
+import { __classPrivateFieldSet } from 'tslib';
+
+
 
 @Component({
   selector: 'app-home-view',
@@ -26,21 +29,25 @@ export class HomeViewComponent implements OnInit {
   brandSubscription: Subscription;  
   modelSubscription: Subscription;
   gasolineSubscription: Subscription;
-  adsShowables: Subscription;
+  // adsShowables: Subscription;
 
   adsToDisplay$: BehaviorSubject<Array<Ad>>;;
+  brandField$: Observable<any>;
+  brandField:any;
 
    homeSearchForm: FormGroup;
 
+
+   
   constructor(private adsService:AdsService, 
               private brandService:BrandService,
               private modelService:ModelService,
               private gasolineService:GasolineService,
               private fb:FormBuilder,              
-              ) { this.adsToDisplay$ = new BehaviorSubject([]); }
+              ) { this.adsToDisplay$ = new BehaviorSubject([]);}
 
   ngOnInit(): void {
-
+    
 
     this.adsService.getAds();  
     this.adSubscription = this.adsService.adsSubject
@@ -82,27 +89,53 @@ export class HomeViewComponent implements OnInit {
       'gasoline': '',
     });
 
+    // this.brandField$ = this.homeSearchForm.get('brand').valueChanges;
+
   }
 // Fin ngOnInit début des fonctions onClick
 
-onBrandSelected(value){
-      if(value == "Choisir") {
-        this.adsShowable = this.adsShowable;
-        console.log("on est egal choisir")
-    }
-    else {
+onBrandSelected(vBrand,vModel,vGasoline){
       
-        this.modelsShowable = this.models.filter(model => model.brand === "/api/brands/"+value);
-        this.adsToDisplay$.next(this.ads.filter(ad => ad.brand === "/api/brands/"+value));
-        this.adsToDisplay$.subscribe(res=>{
-          this.adsShowable = res;
-        })
-    }
+      
+        this.modelsShowable = this.models.filter(model => model.brand === "/api/brands/"+vBrand);
+        let adsShowArray;
+        this.adsShowable = this.ads;
+        let fields = [{id:vBrand, name:"brand"},
+                      {id:vModel, name:"model"}, 
+                      {id:vGasoline, name:"gasoline"}];
+      
+        let fieldsFilled = [];              
+        // let test = this.ads.filter(ad => Object.keys(ad)[0] === "id");
+        for(let i=0;i<fields.length;i++){
+          if(fields[i].id!=""){
+            fieldsFilled.push(fields[i]);
+          }
+        }
+      
+          console.log("what field(s)"+fieldsFilled[0]);
+      
+          for (let i = 0; i<fieldsFilled.length; i++){  
+          this.adsShowable = this.ads.filter(ad =>{
+               
+             return ad[fieldsFilled[i].name] === "/api/"+fieldsFilled[i].name+"s/"+fieldsFilled[i].id; 
+             console.log(ad[fieldsFilled[i].name], "/api/"+fieldsFilled[i].name+"s/"+fieldsFilled[i].id);  
+             }
+             );
+            }
+            
+          console.log(this.adsShowable.length)
+        // this.adsToDisplay$.next(this.ads.filter(ad => ad.brand === "/api/brands/"+value));
+        // this.adsToDisplay$.subscribe(res=>{
+        //   this.adsShowable = res;
+        // })
+    
   console.log("adshowable brand is" + this.adsShowable)
 }
 
 onModelSelected(valueBrand, valueModel){
-  if(valueBrand === 'Choisir') {
+  // console.log("screw"+valueBrand, valueModel, valueGasoline);
+  if(valueBrand === '') {
+    // return false;
     this.adsShowable = this.ads;
   }
   { 
@@ -111,41 +144,107 @@ onModelSelected(valueBrand, valueModel){
 console.log("brand id is" + valueBrand+" et model value is" + valueModel)
 }
 
-onGasolineSelected(gasoline){
-  if(gasoline === 'Choisir') {
-    this.adsShowable = this.ads;
+onGasolineSelected(vBrand, vModel, vGasoline){
+  let adsShowArray;
+  this.adsShowable = this.ads;
+  let fields = [{id:vBrand, name:"brand"},
+                {id:vModel, name:"model"}, 
+                {id:vGasoline, name:"gasoline"}];
+
+  let fieldsFilled = [];              
+  // let test = this.ads.filter(ad => Object.keys(ad)[0] === "id");
+  for(let i=0;i<fields.length;i++){
+    if(fields[i].id!=""){
+      fieldsFilled.push(fields[i]);
+    }
   }
-  { 
+
+    console.log("what field(s)"+fieldsFilled[0]);
+
+    for (let i = 0; i<fieldsFilled.length; i++){  
+    this.adsShowable = this.ads.filter(ad =>{
+         
+       return ad[fieldsFilled[i].name] === "/api/"+fieldsFilled[i].name+"s/"+fieldsFilled[i].id; 
+       console.log(ad[fieldsFilled[i].name], "/api/"+fieldsFilled[i].name+"s/"+fieldsFilled[i].id);  
+       }
+       );
+      }
+      
+    console.log(this.adsShowable.length)
+  // console.log("nb fields filled"+fieldsFilled.length);
+  // this.adsShowable = this.ads.filter(ad => ad.gasoline === "/api/gasolines/"+vGasoline &&
+  //                           ad.model === "/api/models/"+vModel &&
+  //                           ad.brand === "/api/brands/"+vBrand);
+  //                           console.log(typeof vGasoline)
+
+    // this.adsShowable = this.ads.filter(ad => {for (let i =0; i<fieldsFilled.length; i++){
+    //                                                 if(ad[fieldsFilled[i].id] == "/api/"+fieldsFilled[i].name+"s/"+fieldsFilled[i].name){
+    //                                                   return ad[fieldsFilled[i]];
+    //                                                   console.log("/api/"+fieldsFilled[i].name+"s/"+fieldsFilled[i].name);
+    //                                                 }
+
+    //                                               }                                                   
+    //                                           }
+    //                                   );        
+
+
+        // this.adsShowable = this.ads.filter(ad => ad.gasoline === "/api/gasolines/"+vGasoline &&
+        //                              ad.model === "/api/models/"+vModel &&
+        //                              ad[this.fields[0].name] === "/api/brands/"+vBrand);
+                                    
+
+  // for(let i=0;i<fields.length;i++){
+  //       this.adsShowable = this.adsShowable.filter(ad=>{if (ad[fields[i].name] != ""){
+  //       ad[fields[i].name] === "/api/"+fields[i].name+"s/"+fields[i].name;
+  //       console.log("boucle réussie"+ad[fields[i].name]);}{
+  //       // this.adsShowable.concat(adsShowArray);
+  //     }
+  //     });
+  //   }
+  
+  // this.adsShowable = this.ads.filter(
+        // this.adsShowable = ad.gasoline === "/api/gasolines/"+vGasoline &&
+        //                              ad.model === "/api/models/"+vModel &&
+        //                              ad[fields[0].name] === "/api/brands/"+vBrand
+        //                             ;
+
+}
+
+
+
+      // this.adsToDisplay$.next(this.ads.filter(ad => ad.brand === "/api/brands/"+vBrand));
+      // this.adsToDisplay$.subscribe(res => 
+      //   this.adsShowable = res)
+      //   console.log(this.adsShowable);}
+
+    // if(vModel!=""){
+    //   adsModel = this.ads.filter(ad => ad.gasoline === "/api/gasolines/"+vGasoline));
+      
+    // }          
+    // if(vGasoline!=""){
+    //   adsGasoline = this.ads.filter(ad => ad.gasoline === "/api/gasolines/"+vGasoline);
+      // this.adsToDisplay$.next(this.adsShowable.filter(ad => ad.gasoline === "/api/gasoline/"+vGasoline));
+      // this.adsToDisplay$.subscribe(res => 
+      //   this.adsShowable = res);}      
+      
+    
+    // this.adsShowable = this.adsBrands.concat(this.adsModel).concat(this.adsGasoline);
+      // this.adsShowable = ad.gasoline === "/api/gasolines/"+vGasoline &&
+      //                                ad.model === "/api/models/"+vModel &&
+      //                                ad.brand === "/api/brands/"+vBrand
+      //                               ;
+  
+  
+  // this.brandField$ = this.homeSearchForm.get('brand').valueChanges;
+  // this.brandField$.subscribe(res => {
+  //   this.brandField = res;
+  // })
+  
     // this.adsShowable = this.ads.filter(ad => ad.gasoline === "/api/gasolines/"+gasoline &&
     //                                    ad.model === "/api/models/"+vModel &&
     //                                    ad.brand === "/api/brands/"+vBrand
     //                                    );
-    this.adsToDisplay$.next(this.ads.filter(ad => ad.gasoline === "/api/gasolines/"+gasoline));
-    this.adsToDisplay$.subscribe(res=>{
-      this.adsShowable = res;
-    })
+    // this.adsToDisplay$.next(this.ads.filter(ad => ad.brand === "/api/brands/"+this.brandField));
+    // this.adsToDisplay$.subscribe(res=>{
+    //   this.adsShowable = res;
   }
-  // console.log("gasoline id is" + gasoline)
-  console.log("adshowable is" + this.adsShowable)
-}
-
-  // isRightBrand(){
-  //   if (this.homeSearchForm.value.brand === "1"){ 
-  //     return true;
-  //   }
-    
-  // }    
-
-  // brandSel = document.getElementById('brand-sel');
-  // brandSelValue = brandSel.value;
-
-  // onClickFilterBrand(brandId){
-  //   if(brandId === 'Choisir') {
-  //       this.models = this.models.slice(0);
-  //   }
-  //   else {
-  //       this.models = this.models.filter(model => model.brand === brandId);
-  //   }
-  // } 
-
-}

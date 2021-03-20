@@ -6,8 +6,8 @@
         <label>Marque</label>
         <select class="form-control" 
                 formControlName="brand"
-                (change)="onBrandSelected(homeSearchForm.value.brand)">
-            <option value="" selected>Choisir</option>
+                (change)="onBrandSelected(homeSearchForm.value.brand, homeSearchForm.value.model,homeSearchForm.value.gasoline)">
+            <option selected value="">Choisir</option>
             <option *ngFor="let b of brands" [value]="b.id"
             >
             
@@ -15,11 +15,11 @@
             </option>
         </select>
 
-        <label>Modèle</label>
+        <label *ngIf="this.homeSearchForm.value.brand" >Modèle</label>
         <select class="form-control"
                 formControlName="model"
-                *ngIf="this.homeSearchForm.controls.brand.dirty"
-                (change)="onModelSelected(homeSearchForm.value.brand, homeSearchForm.value.model)"
+                *ngIf="this.homeSearchForm.value.brand"
+                (change)="onGasolineSelected(homeSearchForm.value.brand, homeSearchForm.value.model,homeSearchForm.value.gasoline)"
                 >
             <option value="" selected>Choisir</option>
             <option *ngFor="let m of modelsShowable" [value]="m.id"
@@ -31,7 +31,7 @@
         <label>Gasoline</label>
         <select class="form-control"
                 formControlName="gasoline"
-                (change)="onGasolineSelected(homeSearchForm.value.gasoline)"
+                (change)="onGasolineSelected(homeSearchForm.value.brand, homeSearchForm.value.model,homeSearchForm.value.gasoline)"
                 >
             <option value="" selected>Choisir</option>
             <option *ngFor="let g of gasolines" [value]="g.id"
