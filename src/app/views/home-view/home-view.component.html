@@ -83,6 +83,11 @@
 
 <p *ngFor="let ad of adsShowable">
     {{ad.title}} /// {{ad.gasoline}}
+    
+    <a  routerLink="/ads/{{ad.id}}" class="btn btn-round btn-outline-warning btn-sm">
+        <i class="nc-icon nc-simple-delete"></i>
+        lien vers ad single view
+    </a>
 </p>
 
 

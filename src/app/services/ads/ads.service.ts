@@ -14,6 +14,8 @@ export class AdsService {
   brandsSubject: BehaviorSubject<Array<any>>;
   modelsSubject: BehaviorSubject<Array<any>>;
 
+  adsFiltered: BehaviorSubject<Array<any>>;
+
   constructor(private httpClient: HttpClient) {
     this.adsSubject = new BehaviorSubject([]);
     this.brandsSubject = new BehaviorSubject([]);
@@ -49,5 +51,10 @@ export class AdsService {
                               this.modelsSubject.next(this.models);
                             }
                           )
+  }
+
+  addAd(AdToAdd: any): Observable<any>{
+    const headers = { 'content-type': 'application/json'}
+    return this.httpClient.post('http://127.0.0.1:8000/api/ads.json',AdToAdd, {'headers': headers})
   }
 }

@@ -89,6 +89,7 @@ export class HomeViewComponent implements OnInit {
       'gasoline': '',
     });
 
+
     // this.brandField$ = this.homeSearchForm.get('brand').valueChanges;
 
   }
@@ -112,13 +113,13 @@ onBrandSelected(vBrand,vModel,vGasoline){
           }
         }
       
-          console.log("what field(s)"+fieldsFilled[0]);
+          console.log("what field(s)"+fieldsFilled.length);
       
           for (let i = 0; i<fieldsFilled.length; i++){  
           this.adsShowable = this.ads.filter(ad =>{
                
              return ad[fieldsFilled[i].name] === "/api/"+fieldsFilled[i].name+"s/"+fieldsFilled[i].id; 
-             console.log(ad[fieldsFilled[i].name], "/api/"+fieldsFilled[i].name+"s/"+fieldsFilled[i].id);  
+             console.log(this.adsShowable);  
              }
              );
             }
@@ -159,92 +160,15 @@ onGasolineSelected(vBrand, vModel, vGasoline){
     }
   }
 
-    console.log("what field(s)"+fieldsFilled[0]);
-
-    for (let i = 0; i<fieldsFilled.length; i++){  
-    this.adsShowable = this.ads.filter(ad =>{
-         
-       return ad[fieldsFilled[i].name] === "/api/"+fieldsFilled[i].name+"s/"+fieldsFilled[i].id; 
-       console.log(ad[fieldsFilled[i].name], "/api/"+fieldsFilled[i].name+"s/"+fieldsFilled[i].id);  
-       }
-       );
-      }
-      
-    console.log(this.adsShowable.length)
-  // console.log("nb fields filled"+fieldsFilled.length);
-  // this.adsShowable = this.ads.filter(ad => ad.gasoline === "/api/gasolines/"+vGasoline &&
-  //                           ad.model === "/api/models/"+vModel &&
-  //                           ad.brand === "/api/brands/"+vBrand);
-  //                           console.log(typeof vGasoline)
-
-    // this.adsShowable = this.ads.filter(ad => {for (let i =0; i<fieldsFilled.length; i++){
-    //                                                 if(ad[fieldsFilled[i].id] == "/api/"+fieldsFilled[i].name+"s/"+fieldsFilled[i].name){
-    //                                                   return ad[fieldsFilled[i]];
-    //                                                   console.log("/api/"+fieldsFilled[i].name+"s/"+fieldsFilled[i].name);
-    //                                                 }
-
-    //                                               }                                                   
-    //                                           }
-    //                                   );        
-
-
-        // this.adsShowable = this.ads.filter(ad => ad.gasoline === "/api/gasolines/"+vGasoline &&
-        //                              ad.model === "/api/models/"+vModel &&
-        //                              ad[this.fields[0].name] === "/api/brands/"+vBrand);
-                                    
-
-  // for(let i=0;i<fields.length;i++){
-  //       this.adsShowable = this.adsShowable.filter(ad=>{if (ad[fields[i].name] != ""){
-  //       ad[fields[i].name] === "/api/"+fields[i].name+"s/"+fields[i].name;
-  //       console.log("boucle réussie"+ad[fields[i].name]);}{
-  //       // this.adsShowable.concat(adsShowArray);
-  //     }
-  //     });
-  //   }
-  
-  // this.adsShowable = this.ads.filter(
-        // this.adsShowable = ad.gasoline === "/api/gasolines/"+vGasoline &&
-        //                              ad.model === "/api/models/"+vModel &&
-        //                              ad[fields[0].name] === "/api/brands/"+vBrand
-        //                             ;
-
+// le meilleur qu'on ait trouvé jusque là
+      for (let i = 0; i<fieldsFilled.length; i++){  
+        this.adsShowable = this.ads.filter(ad =>{
+             
+           return ad[fieldsFilled[i].name] === "/api/"+fieldsFilled[i].name+"s/"+fieldsFilled[i].id;
+           console.log(ad[fieldsFilled[i].name], "/api/"+fieldsFilled[i].name+"s/"+fieldsFilled[i].id);  
+           }
+           );
+          }
+// fin le meilleur qu'on ait trouvé jusque là      
 }
-
-
-
-      // this.adsToDisplay$.next(this.ads.filter(ad => ad.brand === "/api/brands/"+vBrand));
-      // this.adsToDisplay$.subscribe(res => 
-      //   this.adsShowable = res)
-      //   console.log(this.adsShowable);}
-
-    // if(vModel!=""){
-    //   adsModel = this.ads.filter(ad => ad.gasoline === "/api/gasolines/"+vGasoline));
-      
-    // }          
-    // if(vGasoline!=""){
-    //   adsGasoline = this.ads.filter(ad => ad.gasoline === "/api/gasolines/"+vGasoline);
-      // this.adsToDisplay$.next(this.adsShowable.filter(ad => ad.gasoline === "/api/gasoline/"+vGasoline));
-      // this.adsToDisplay$.subscribe(res => 
-      //   this.adsShowable = res);}      
-      
-    
-    // this.adsShowable = this.adsBrands.concat(this.adsModel).concat(this.adsGasoline);
-      // this.adsShowable = ad.gasoline === "/api/gasolines/"+vGasoline &&
-      //                                ad.model === "/api/models/"+vModel &&
-      //                                ad.brand === "/api/brands/"+vBrand
-      //                               ;
-  
-  
-  // this.brandField$ = this.homeSearchForm.get('brand').valueChanges;
-  // this.brandField$.subscribe(res => {
-  //   this.brandField = res;
-  // })
-  
-    // this.adsShowable = this.ads.filter(ad => ad.gasoline === "/api/gasolines/"+gasoline &&
-    //                                    ad.model === "/api/models/"+vModel &&
-    //                                    ad.brand === "/api/brands/"+vBrand
-    //                                    );
-    // this.adsToDisplay$.next(this.ads.filter(ad => ad.brand === "/api/brands/"+this.brandField));
-    // this.adsToDisplay$.subscribe(res=>{
-    //   this.adsShowable = res;
-  }
+}
