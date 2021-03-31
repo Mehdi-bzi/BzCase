@@ -1,3 +1,5 @@
+import { ModelService } from './services/model/model.service';
+import { BrandService } from './services/brand/brand.service';
 import { UserService } from './services/user/user.service';
 import { UsersViewComponent } from './views/users-view/users-view.component';
 import { UserSingleViewComponent } from './views/user-single-view/user-single-view.component';
@@ -26,7 +28,8 @@ import { AdCreatorViewComponent } from './views/ad-creator-view/ad-creator-view.
     HomeViewComponent,
     AdsViewComponent,
     UsersViewComponent,
-    UserCreatorViewComponent
+    UserCreatorViewComponent,
+    AdCreatorViewComponent,
 
   ], 
   imports: [
@@ -38,7 +41,9 @@ import { AdCreatorViewComponent } from './views/ad-creator-view/ad-creator-view.
   ],
   providers: [
     AdsService,
-    UserService
+    UserService,
+    BrandService,
+    ModelService
   ],
   bootstrap: [AppComponent]
 })

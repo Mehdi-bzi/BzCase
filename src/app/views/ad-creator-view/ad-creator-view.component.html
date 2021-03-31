@@ -1,0 +1,122 @@
+
+
+<form class="mt-5" [formGroup]="newAdForm" (ngSubmit)="onSubmitNewAdForm()">
+    <!-- <select class="form-control"
+    formControlName="brand"
+    (change)="getModelsForBrandId(newAdForm.value.brand)">
+        <option selected >Choisir</option>
+        <option *ngFor="let b of brands" [value]="b.id">
+            {{b.name}}
+        </option>
+    </select> -->
+    <label>Marque de voiture : </label>
+    <select class="form-control"
+    formControlName="brand"
+    (change)="getModelsForBrandId(newAdForm.value.brand)">
+        <option value="" selected >Choisir</option>
+        <option *ngFor="let b of brands" [value]="'/api/brands/'+b.id">
+            <!-- {{"/api/brands/"+b.id}} -->
+            {{b.name}}
+        </option>
+    </select>
+
+    <div *ngIf="(newAdForm.value.brand)" class="form-group">
+        <label>Modèle de voiture : </label>
+        <select class="form-control"
+        formControlName="model">
+            <option value="" selected >Choisir</option>
+            <option *ngFor="let m of modelsShowable" [value]="'/api/models/'+m.id">
+                {{"/api/models/"+m.id}}
+            </option>
+        </select>
+    </div>    
+
+    <div class="form-group">
+        <label>Professionel : </label>
+        <select class="form-control"
+        formControlName="user"
+        (change)="getGaragesOfUser(newAdForm.value.user)">
+            <option value="" selected >Choisir</option>
+            <option *ngFor="let u of users" [value]="'/api/users/'+u.id">
+                {{"/api/users/"+u.id}}
+            </option>
+        </select>
+    </div>  
+
+    
+    <div *ngIf="(newAdForm.value.user)" class="form-group">
+        <label>Garage : </label>
+        <select class="form-control"
+        formControlName="garage">
+            <option value="" selected >Choisir</option>
+            <option *ngFor="let g of garagesShowable" [value]="'/api/garages/'+g.id">
+                {{"/api/garages/"+g.id}}
+            </option>
+        </select>
+    </div>    
+
+
+    <label>Gasoline : </label>
+    <select class="form-control"
+    formControlName="gasoline">
+        <option value="" selected >Choisir</option>
+        <option *ngFor="let gas of gasolines" [value]="'/api/gasolines/'+gas.id">
+            {{"/api/gasolines/"+gas.id}}
+        </option>
+    </select>
+
+    <span>les inputs</span>
+    
+    <div class="form-group">
+        <div class="text-left">
+            <label>Titre de l'annonce : </label>
+            <input type="text"
+                   class="form-control"
+                   placeholder="Titre"
+                   formControlName="title"/>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="text-left">
+            <label>Description : </label>
+            <input type="text"
+                   class="form-control"
+                   placeholder="Description"
+                   formControlName="description"/>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="text-left">
+            <label>Prix : </label>
+            <input type="text"
+                   class="form-control"
+                   placeholder="Prix"
+                   formControlName="price"/>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="text-left">
+            <label>Mileage : </label>
+            <input type="text"
+                   class="form-control"
+                   placeholder="Km"
+                   formControlName="mileage"/>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="text-left">
+            <label>Photo : </label>
+            <input type="text"
+                   class="form-control"
+                   placeholder="Photo"
+                   formControlName="photo"/>
+        </div>
+    </div>
+
+    <button class="btn btn-danger btn-block btn-round mt-4" [disabled]="newAdForm.invalid">Ajouter
+    </button>
+</form>
