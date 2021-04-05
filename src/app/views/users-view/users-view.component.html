@@ -1,1 +1,32 @@
 <p>users-view works!</p>
+
+<p *ngFor="let u of users" >
+    {{u.email}}
+</p>
+
+<div class="container text-center">
+
+    <button type="button"
+            class="m-2 p-4 btn btn-dark">
+      <a routerLink="/users/new" class="card-link text-white">
+        Ajouter un user
+      </a>
+    </button>
+  
+    <table class="table m-1">
+      <thead class="thead-dark">
+      <tr>
+        <th scope="col">Id</th>
+        <th scope="col">Email</th>
+        <th scope="col">Supprimer</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr app-table-row-user *ngFor="let u of users"
+          [userId]="u.id"
+          [userEmail]="u.email">
+      </tr>
+      </tbody>
+    </table>
+  
+  </div>

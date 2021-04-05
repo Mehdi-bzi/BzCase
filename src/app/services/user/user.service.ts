@@ -24,6 +24,16 @@ export class UserService {
                           )
   }
 
+  getSingleUser(userId){
+    return this.httpClient.get('http://127.0.0.1:8000/api/users/'+userId)
+                          .subscribe(
+                            res=>{
+                              this.users = res;
+                              this.usersSubject.next(this.users);
+                            }
+                          )
+  }
+
   addUser(userToAdd: any): Observable<any>{
     const headers = { 'content-type': 'application/json'}
     return this.httpClient.post('http://127.0.0.1:8000/api/users.json',userToAdd, {'headers': headers})

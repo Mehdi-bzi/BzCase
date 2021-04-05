@@ -1,3 +1,5 @@
+import { UserService } from './../../services/user/user.service';
+import { Subscription } from 'rxjs';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -7,9 +9,19 @@ import { Component, OnInit } from '@angular/core';
 })
 export class UsersViewComponent implements OnInit {
 
-  constructor() { }
+  users:Array<[Object]>;
+  userSubscription: Subscription;
+
+  constructor(private userService:UserService) { }
 
   ngOnInit(): void {
+    this.userService.getUsers();
+    this.userSubscription = this.userService.usersSubject
+                            .subscribe(
+                              (res) => {
+                                this.users = res;
+                              }
+    )
   }
 
 }

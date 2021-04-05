@@ -1,94 +1,98 @@
 <p>home-view works!</p>
 
 
-<form class="mt-5">
-    <form [formGroup]="homeSearchForm" (ngSubmit)="onSubmitEditedModelForm()">        
-        <label>Marque</label>
-        <select class="form-control" 
-                formControlName="brand"
-                (change)="onBrandSelected(homeSearchForm.value.brand, homeSearchForm.value.model,homeSearchForm.value.gasoline)">
-            <option selected value="">Choisir</option>
-            <option *ngFor="let b of brands" [value]="b.id"
-            >
-            
-                {{b.id}}
-            </option>
-        </select>
 
-        <label *ngIf="this.homeSearchForm.value.brand" >Modèle</label>
-        <select class="form-control"
-                formControlName="model"
-                *ngIf="this.homeSearchForm.value.brand"
-                (change)="onGasolineSelected(homeSearchForm.value.brand, homeSearchForm.value.model,homeSearchForm.value.gasoline)"
+
+
+
+
+
+<div style="border:none;background:rgb(196, 223, 255)" class="d-flex flex-row p-4">
+    <img class="p-1 mr-5" src="../../../assets/img/centrauto-logo350x104.png" alt="" width="350" height="104">
+
+    <form [formGroup]="homeSearchForm" (ngSubmit)="onSubmitEditedModelForm()">
+
+
+        <div class="d-flex flex-row">
+        <div class="p-3">        
+            <label>Marque</label>
+                <select class="form-control" 
+
+                        formControlName="brand"
+                        (change)="onBrandSelected(homeSearchForm.value.brand, homeSearchForm.value.model,homeSearchForm.value.gasoline)">
+                    <option selected value="">Choisir</option>
+                    <option *ngFor="let b of brands" [value]="b.id"
+                    >
+                    
+                        {{b.id}}
+                    </option>
+                </select>
+        </div>    
+
+        <div class="p-3">   
+            <label *ngIf="this.homeSearchForm.value.brand" >Modèle</label>
+                <select class="form-control"
+                        formControlName="model"
+                        *ngIf="this.homeSearchForm.value.brand"
+                        (change)="onGasolineSelected(homeSearchForm.value.brand, homeSearchForm.value.model,homeSearchForm.value.gasoline)"
+                        >
+                    <option value="" selected>Choisir</option>
+                    <option *ngFor="let m of modelsShowable" [value]="m.id"
+                    >
+                        {{m.name}}, {{m.brand}}
+                    </option>
+                </select>
+        </div>
+
+        <div class="p-3">  
+            <label>Gasoline</label>
+            <select class="form-control"
+                    formControlName="gasoline"
+                    (change)="onGasolineSelected(homeSearchForm.value.brand, homeSearchForm.value.model,homeSearchForm.value.gasoline)"
+                    >
+                <option value="" selected>Choisir</option>
+                <option *ngFor="let g of gasolines" [value]="g.id"
                 >
-            <option value="" selected>Choisir</option>
-            <option *ngFor="let m of modelsShowable" [value]="m.id"
-            >
-                {{m.name}}, {{m.brand}}
-            </option>
-        </select>
-
-        <label>Gasoline</label>
-        <select class="form-control"
-                formControlName="gasoline"
-                (change)="onGasolineSelected(homeSearchForm.value.brand, homeSearchForm.value.model,homeSearchForm.value.gasoline)"
-                >
-            <option value="" selected>Choisir</option>
-            <option *ngFor="let g of gasolines" [value]="g.id"
-            >
-                {{g.name}}, {{g.id}}
-            </option>
-        </select>
-    
-    <!-- </div>
-        <div class="form-control-feedback text-danger"
-         *ngIf="(newCarForm.controls.brandId.dirty || newCarForm.controls.brandId.touched)
-                && newCarForm.controls.brandId.invalid
-                && newCarForm.controls.brandId.errors.required">
-        Merci de choisir une marque.
-    </div> -->
-    <!-- <div class="form-control-feedback text-danger"
-         *ngIf="(newCarForm.controls.brandId.dirty || newCarForm.controls.brandId.touched)
-                && newCarForm.controls.brandId.invalid
-                && newCarForm.controls.brandId.errors.required">
-        Merci de choisir une marque.
-    </div> -->
-
-
-<!-- <div class="form-group">
-    <div class="text-left">
-        <label>Marque</label>
-        <select class="form-control"
-                formControlName="brandId"
-                [(ngModel)]="car.brandId"
-                #sB
-                (change)="getModelsForBrandId(sB.value)">
-            <option value="" selected>Choisir</option>
-            <option *ngFor="let u of users" [value]="u.id">{{u.name}}
-            </option>
-        </select>
+                    {{g.name}}, {{g.id}}
+                </option>
+            </select>
+        </div>    
     </div>
-    <div class="form-control-feedback text-danger"
-         *ngIf="(newCarForm.controls.brandId.dirty || newCarForm.controls.brandId.touched)
-                && newCarForm.controls.brandId.invalid
-                && newCarForm.controls.brandId.errors.required">
-        Merci de choisir une marque.
-    </div>
-</div> -->
-</form>
+    </form>
+
+</div>
 
 <br>
 
 <h1>Annonces</h1>
 
-<p *ngFor="let ad of adsShowable">
+
+<div class="container-fluid bg-3 text-center" style="border:solid orange;margin:auto">
+    <div class="row m-auto">
+        <div *ngFor="let adshow of adsShowable" class="card  ml-2"  style="width: 18rem;">
+            <img class="card-img-top" src="..." alt="Card image cap">
+            <div class="card-body">
+            <h5 class="card-title">{{adshow.title}}</h5>
+            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+            <a href="#" class="btn btn-primary">Go somewhere</a>
+            </div>
+        </div>
+    </div>
+
+<span>ad showable ={{adsShowable}}</span> <br>
+<span>ads ={{ads}}</span>
+<!-- <p *ngFor="let ad of adsShowable">
     {{ad.title}} /// {{ad.gasoline}}
     
     <a  routerLink="/ads/{{ad.id}}" class="btn btn-round btn-outline-warning btn-sm">
         <i class="nc-icon nc-simple-delete"></i>
         lien vers ad single view
     </a>
-</p>
+</p> -->
+
+<button (click)="checkU()">test</button>
+
+<button (click)="checkAds()">test adds</button>
 
 
 <p *ngFor="let a of ads">

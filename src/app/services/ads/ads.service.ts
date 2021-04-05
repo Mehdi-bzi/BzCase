@@ -14,12 +14,14 @@ export class AdsService {
   brandsSubject: BehaviorSubject<Array<any>>;
   modelsSubject: BehaviorSubject<Array<any>>;
 
+  adsFil:Array[];
   adsFiltered: BehaviorSubject<Array<any>>;
 
   constructor(private httpClient: HttpClient) {
     this.adsSubject = new BehaviorSubject([]);
     this.brandsSubject = new BehaviorSubject([]);
     this.modelsSubject = new BehaviorSubject([]);
+    this.adsFiltered = new BehaviorSubject([]);
    }
 
   getAds(){
@@ -32,6 +34,44 @@ export class AdsService {
                           )
 
   }
+
+  // getSingleAd(vBrand){
+  //   return this.httpClient.get('http://127.0.0.1:8000/api/ads/'+vBrand)
+  //                         .subscribe(
+  //                           res=>{
+  //                             this.adsFil = res;
+  //                             this.adsFiltered.next(this.adsFil);
+  //                           }, err => {
+  //                             console.log(err);}
+  //                         )
+
+  // }
+
+  getAdsFiltered(vBrand, vModel, vGasoline){
+    return this.httpClient.get('http://127.0.0.1:8000/api/ads?brand='+vBrand+'&model='+vModel+'&gasoline='+vGasoline)
+                          .subscribe(
+                            res=>{
+                              this.adsFil = res['hydra:member'];
+                              this.adsFiltered.next(this.adsFil);
+                            }, err => {
+                              console.log("Alors l'erreur c'est : ",err);}
+                          )
+
+  }
+
+
+  // getAdsFiltered(vBrand){
+  //   return this.httpClient.get('http://127.0.0.1:8000/api/ads?brand='+vBrand)
+  //                         .subscribe(
+  //                           res=>{
+  //                             this.adsFil = res;
+  //                             this.adsFiltered.next(this.adsFil);
+  //                           }, err => {
+  //                             console.log(err);}
+  //                         )
+
+  // }
+
 
   getBrands(){
     return this.httpClient.get('http://localhost:8000/api/brands.json')

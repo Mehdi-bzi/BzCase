@@ -1,4 +1,7 @@
+import { Subscription } from 'rxjs';
+import { UserService } from './../../services/user/user.service';
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-user-single-view',
@@ -7,9 +10,28 @@ import { Component, OnInit } from '@angular/core';
 })
 export class UserSingleViewComponent implements OnInit {
 
-  constructor() { }
+  user:Array<any>;
+  userSub: Subscription;
+
+  constructor(private userService:UserService,
+              private router:Router,
+              private route: ActivatedRoute) {                 
+              }
 
   ngOnInit(): void {
+    const id = this.route.snapshot.params.id;
+
+    this.userService.getSingleUser(id);
+    this.userSub = this.userService.usersSubject
+                    .subscribe(
+                      res=>{
+                        this.user = res;
+                      }
+                    )
+                    console.log(this.user)
   }
 
+  checkU(){
+    console.log(this.user)
+  }
 }

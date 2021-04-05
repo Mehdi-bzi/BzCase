@@ -21,15 +21,20 @@ import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AdsViewComponent } from './views/ads-view/ads-view.component';
 import { AdCreatorViewComponent } from './views/ad-creator-view/ad-creator-view.component';
+import { TableRowUserComponent } from './components/table-row-user/table-row-user.component';
+import { DashboardViewComponent } from './views/dashboard-view/dashboard-view.component';
 
 @NgModule({
   declarations: [
-    AppComponent,
+    AppComponent, 
     HomeViewComponent,
     AdsViewComponent,
     UsersViewComponent,
     UserCreatorViewComponent,
     AdCreatorViewComponent,
+    TableRowUserComponent,
+    DashboardViewComponent,
+    UserSingleViewComponent
 
   ], 
   imports: [
