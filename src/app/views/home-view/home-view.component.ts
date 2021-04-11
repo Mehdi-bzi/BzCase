@@ -4,10 +4,10 @@ import { BrandService } from './../../services/brand/brand.service';
 import { AdsService } from './../../services/ads/ads.service';
 import { Component, OnInit } from '@angular/core';
 import { Subscription, BehaviorSubject, Observable } from 'rxjs';
-import { FormBuilder, FormGroup, FormsModule ,Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, FormsModule ,Validators } from '@angular/forms';
 import { __classPrivateFieldSet } from 'tslib';
 import { NouisliderModule } from 'ng2-nouislider';
-
+import { Options } from '@angular-slider/ngx-slider';
 
 
 
@@ -23,20 +23,39 @@ export class HomeViewComponent implements OnInit {
   brands:Array<[Object]>;
   models:Array<[Object]>;
   gasolines: Array<[Object]>;
-  mileage: Array<[Object]>;
 
-  mileageMin;
+
+  //Options pour le field kilomètrage 
+  optionsKm: Options = {
+    floor: 0,
+    ceil: 120000,
+    step: 5000
+  };
+
+    //Options pour le field prix 
+    optionsPrice: Options = {
+      floor: 1000,
+      ceil: 50000,
+  
+    };
+
+    //Options pour le field date de mise en circulation 
+    optionsDate: Options = {
+      floor: 1987,
+      ceil: 2020,
+      step: 1
+    };
 
   modelsShowable: Array<[Object]>;
   adsShowable: Array<[Object]>;
-
+  
 
   adSubscription: Subscription;
   brandSubscription: Subscription;  
   modelSubscription: Subscription;
   gasolineSubscription: Subscription;
   adsShowableSub: Subscription;
-  mileageSub: Subscription;
+
 
   adsToDisplay$: BehaviorSubject<Array<Ad>>;;
   brandField$: Observable<any>;
@@ -55,6 +74,7 @@ export class HomeViewComponent implements OnInit {
                   }
 
   ngOnInit(): void {
+
 
     this.adsService.getAds();  
     this.adSubscription = this.adsService.adsSubject
@@ -94,9 +114,10 @@ export class HomeViewComponent implements OnInit {
       'brand': '', 
       'model': '',
       'gasoline': '',
-      'mileageMin': this.mileageMin,
+      'mileage': [[0,0]],
       'mileageMax': '',
-      'price': '',      
+      'price': 1000,
+      'date' : [[1987,2020]]      
     });
 
  
@@ -107,12 +128,12 @@ export class HomeViewComponent implements OnInit {
   }
 // Fin ngOnInit début des fonctions onClick
 
-onBrandSelected(vBrand,vModel,vGasoline,vMiln,vPrice){
-  this.homeSearchForm.value.model = 'toto';
+onBrandSelected(vBrand,vModel,vGasoline,vMileage,vPrice,vDate){
+
   vModel = '';
   console.log(vModel);
    this.modelsShowable = this.models.filter(model => model.brand === "/api/brands/"+vBrand);
-  this.adsService.getAdsFiltered(vBrand, vModel, vGasoline,vMiln,vPrice);
+  this.adsService.getAdsFiltered(vBrand,vModel,vGasoline,vMileage,vPrice,vDate);
   this.adsService.adsFiltered.
                   subscribe(
                     res=>{
@@ -120,12 +141,12 @@ onBrandSelected(vBrand,vModel,vGasoline,vMiln,vPrice){
                     }
                   )
 
-     console.log("valeur de model "+this.homeSearchForm.value.model)  
+     console.log("valeur supérieure de mileage "+vMileage[1])  
 }
 
-checkU(){
-  console.log(this.mileageMin)
-}
+// checkU(){
+//   console.log(this.mileageMin)
+// }
 
 checkAds(){
   console.log(this.ads)
@@ -144,14 +165,14 @@ onModelSelected(valueBrand, valueModel){
 console.log("brand id is" + valueBrand+" et model value is" + valueModel)
 }
 
-onFieldSelected(vBrand,vModel,vGasoline,vMileage,vPrice){
+onFieldSelected(vBrand,vModel,vGasoline,vMileage,vPrice,vDate){
   if(vBrand != ''){
     this.modelsShowable = this.models.filter(model => model.brand === "/api/brands/"+vBrand);
   }{
     vModel="";
   }
   // this.adsService.getAdsFilteredMil(vBrand, vModel, vGasoline,vMil);
-  this.adsService.getAdsFiltered(vBrand, vModel, vGasoline);
+  this.adsService.getAdsFiltered(vBrand, vModel, vGasoline,vMileage,vPrice,vDate);
   this.adsService.adsFiltered.
                   subscribe(
                     res=>{
@@ -161,32 +182,4 @@ onFieldSelected(vBrand,vModel,vGasoline,vMileage,vPrice){
     console.log("value de model sur gasoline "+vModel)              
 }
 
-
-
-// onGasolineSelected(vBrand, vModel, vGasoline){
-//   let adsShowArray;
-//   this.adsShowable = this.ads;
-//   let fields = [{id:vBrand, name:"brand"},
-//                 {id:vModel, name:"model"}, 
-//                 {id:vGasoline, name:"gasoline"}];
-
-//   let fieldsFilled = [];              
-//   // let test = this.ads.filter(ad => Object.keys(ad)[0] === "id");
-//   for(let i=0;i<fields.length;i++){
-//     if(fields[i].id!=""){
-//       fieldsFilled.push(fields[i]);
-//     }
-//   }
-
-// // le meilleur qu'on ait trouvé jusque là
-//       for (let i = 0; i<fieldsFilled.length; i++){  
-//         this.adsShowable = this.ads.filter(ad =>{
-             
-//            return ad[fieldsFilled[i].name] === "/api/"+fieldsFilled[i].name+"s/"+fieldsFilled[i].id;
-//            console.log(ad[fieldsFilled[i].name], "/api/"+fieldsFilled[i].name+"s/"+fieldsFilled[i].id);  
-//            }
-//            );
-//           }
-// // fin le meilleur qu'on ait trouvé jusque là      
-// }
 }

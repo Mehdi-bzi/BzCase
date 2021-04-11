@@ -25,6 +25,7 @@ import { AdCreatorViewComponent } from './views/ad-creator-view/ad-creator-view.
 import { TableRowUserComponent } from './components/table-row-user/table-row-user.component';
 import { DashboardViewComponent } from './views/dashboard-view/dashboard-view.component';
 import { NouisliderModule } from 'ng2-nouislider';
+import { NgxSliderModule } from '@angular-slider/ngx-slider';
 
 
 
@@ -49,6 +50,7 @@ import { NouisliderModule } from 'ng2-nouislider';
     ReactiveFormsModule,
     FormsModule,
     NouisliderModule,
+    NgxSliderModule
   ],
   providers: [
     AdsService,

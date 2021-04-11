@@ -3,59 +3,75 @@
 <div style="border:none;background:rgb(196, 223, 255)" class="d-flex flex-row p-4">
     <img class="p-1 mr-5" src="../../../assets/img/centrauto-logo350x104.png" alt="" width="350" height="104">
 </div>
-<div style="border:none;background:rgb(229, 241, 255)" class="d-flex flex-row p-1">
-    <form class="d-flex m-auto" [formGroup]="homeSearchForm" (ngSubmit)="onSubmitEditedModelForm()">
 
-        <div class="d-flex flex-row">
+
+
+<div style="border:none;background:rgb(229, 241, 255)" class="d-flex p-1">
+
+
+
+    <form class="d-flex flex-wrap w-100" [formGroup]="homeSearchForm" (ngSubmit)="onSubmitEditedModelForm()">
+
+        <div class="form-row col-xl-5 col-sm-12">   
             
-        <div class="p-3">        
-            <label>Marque</label>
-                <select class="form-control" 
+            <div class="col-xl-3 col-md-4 col-sm-12">        
+                <label>Marque</label>
+                    <select class="form-control" 
 
-                        formControlName="brand"
-                        (change)="onBrandSelected(homeSearchForm.value.brand, homeSearchForm.value.model,homeSearchForm.value.gasoline,homeSearchForm.value.mileage,homeSearchForm.value.price)">
-                    <option selected value="">Choisir</option>
-                    <option *ngFor="let b of brands" [value]="b.id"
-                    >
-                    
-                        {{b.id}}
-                    </option>
-                </select>
-        </div>    
+                            formControlName="brand"
+                            (change)="onBrandSelected(homeSearchForm.value.brand, homeSearchForm.value.model,homeSearchForm.value.gasoline,homeSearchForm.value.mileage,homeSearchForm.value.price,homeSearchForm.value.date)">
+                        <option selected value="">Choisir</option>
+                        <option *ngFor="let b of brands" [value]="b.id"
+                        >
+                        
+                            {{b.id}}
+                        </option>
+                    </select>
+            
+            </div>    
 
-        <div class="p-3">   
-            <label *ngIf="this.homeSearchForm.value.brand" >Modèle</label>
+            <div class="col-xl-3 col-md-4 col-sm-12">   
+                <label *ngIf="this.homeSearchForm.value.brand" >Modèle</label>
+                    <select class="form-control"
+                            formControlName="model"
+                            *ngIf="this.homeSearchForm.value.brand"
+                            (change)="onFieldSelected(homeSearchForm.value.brand, homeSearchForm.value.model,homeSearchForm.value.gasoline,homeSearchForm.value.mileage,homeSearchForm.value.price,homeSearchForm.value.date)"
+                            >
+                        <option value="" selected>Choisir</option>
+                        <option *ngFor="let m of modelsShowable" [value]="m.id"
+                        >
+                            {{m.name}}, {{m.brand}}
+                        </option>
+                    </select> 
+            </div>
+
+            <div class="col-xl-3 col-md-3 col-sm-12">  
+                <label>Carburant</label>
                 <select class="form-control"
-                        formControlName="model"
-                        *ngIf="this.homeSearchForm.value.brand"
-                        (change)="onFieldSelected(homeSearchForm.value.brand, homeSearchForm.value.model,homeSearchForm.value.gasoline,homeSearchForm.value.mileage,homeSearchForm.value.price)"
+                        formControlName="gasoline"
+                        (change)="onFieldSelected(homeSearchForm.value.brand, homeSearchForm.value.model,homeSearchForm.value.gasoline,homeSearchForm.value.mileage,homeSearchForm.value.price,homeSearchForm.value.date)"
                         >
                     <option value="" selected>Choisir</option>
-                    <option *ngFor="let m of modelsShowable" [value]="m.id"
+                    <option *ngFor="let g of gasolines" [value]="g.id"
                     >
-                        {{m.name}}, {{m.brand}}
+                        {{g.name}}, {{g.id}}
                     </option>
-                </select> 
-        </div>
+                </select>
+            </div>
+            
+        </div><!-- fin premier ligne de fields -->
 
-        <div class="p-3">  
-            <label>Carburant</label>
-            <select class="form-control"
-                    formControlName="gasoline"
-                    (change)="onFieldSelected(homeSearchForm.value.brand, homeSearchForm.value.model,homeSearchForm.value.gasoline,homeSearchForm.value.mileage,homeSearchForm.value.price)"
-                    >
-                <option value="" selected>Choisir</option>
-                <option *ngFor="let g of gasolines" [value]="g.id"
-                >
-                    {{g.name}}, {{g.id}}
-                </option>
-            </select>
-        </div>    
+    <div class="form-row col-xl-6 col-sm-12 border-left border-light d-flex justify-content-between">
 
-        <div class="p-3 nouislider">  
-            <label>Kilométrage</label>
-
-            <nouislider [min]="0" [max]="20" [step]="0.5" [(ngModel)]="homeSearchForm.controls.mileageMin"></nouislider>
+        <div class="col-xl-3 col-md-5 col-sm-12 mr-4">  
+            <label class="d-flex w-100 ">Kilométrage</label>
+            <ngx-slider [options]="optionsKm" formControlName="mileage"
+                            (userChange)="onFieldSelected(homeSearchForm.value.brand, 
+                            homeSearchForm.value.model,
+                            homeSearchForm.value.gasoline,
+                            homeSearchForm.value.mileage,
+                            homeSearchForm.value.price,
+                            homeSearchForm.value.date)"></ngx-slider>
 
             <!-- <select class="form-control"
                     formControlName="mileageMin"
@@ -69,36 +85,36 @@
             </select> -->
         </div> 
 
-        <div class="p-3">  
-            <label>Kilométrage Maximum</label>
-            <select class="form-control"
-                    formControlName="mileageMax"
-                    (change)="onFieldSelected(homeSearchForm.value.brand, homeSearchForm.value.model,homeSearchForm.value.gasoline,homeSearchForm.value.mileage,homeSearchForm.value.price)"
-                    >
-                <option value="" selected>Choisir</option>
-                <option *ngFor="let mil of mileages" [value]="g.id"
-                >
-                    {{g.name}}, {{g.id}}
-                </option>
-            </select>
+        <div class="col-xl-3 col-md-5 col-sm-12">  
+            <label class="d-flex w-100">Prix</label>
+            <ngx-slider [options]="optionsPrice" formControlName="price"
+                        (userChange)="onFieldSelected(homeSearchForm.value.brand, 
+                                              homeSearchForm.value.model,
+                                              homeSearchForm.value.gasoline,
+                                              homeSearchForm.value.mileage,
+                                              homeSearchForm.value.price,
+                                              homeSearchForm.value.date)"
+            >
+            </ngx-slider>
+
         </div> 
 
-        <div class="p-3">  
-            <label>Prix</label>
-            <select class="form-control"
-                    formControlName="price"
-                    (change)="onFieldSelected(homeSearchForm.value.brand, homeSearchForm.value.model,homeSearchForm.value.gasoline,homeSearchForm.value.mileage,homeSearchForm.value.price)"
-                    >
-                <option value="" selected>Choisir</option>
-                <option *ngFor="let g of gasolines" [value]="g.id"
-                >
-                    {{g.name}}, {{g.id}}
-                </option>
-            </select>
+        <div class="col-xl-3 col-md-5 col-sm-12">  
+            <label class="d-flex w-100">Date mise en circulation</label>
+            <ngx-slider [options]="optionsDate" formControlName="date"
+                        (userChange)="onFieldSelected(homeSearchForm.value.brand, 
+                        homeSearchForm.value.model,
+                        homeSearchForm.value.gasoline,
+                        homeSearchForm.value.mileage,
+                        homeSearchForm.value.price,
+                        homeSearchForm.value.date)"
+            >
+            </ngx-slider>
+
         </div> 
 
-    </div>
-    </form>
+    </div><!-- fin deuxieme ligne de fields -->
+</form>
 
 </div>
 
