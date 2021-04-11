@@ -1,25 +1,19 @@
-<p>home-view works!</p>
-
-
-
-
-
-
 
 
 <div style="border:none;background:rgb(196, 223, 255)" class="d-flex flex-row p-4">
     <img class="p-1 mr-5" src="../../../assets/img/centrauto-logo350x104.png" alt="" width="350" height="104">
-
-    <form [formGroup]="homeSearchForm" (ngSubmit)="onSubmitEditedModelForm()">
-
+</div>
+<div style="border:none;background:rgb(229, 241, 255)" class="d-flex flex-row p-1">
+    <form class="d-flex m-auto" [formGroup]="homeSearchForm" (ngSubmit)="onSubmitEditedModelForm()">
 
         <div class="d-flex flex-row">
+            
         <div class="p-3">        
             <label>Marque</label>
                 <select class="form-control" 
 
                         formControlName="brand"
-                        (change)="onBrandSelected(homeSearchForm.value.brand, homeSearchForm.value.model,homeSearchForm.value.gasoline)">
+                        (change)="onBrandSelected(homeSearchForm.value.brand, homeSearchForm.value.model,homeSearchForm.value.gasoline,homeSearchForm.value.mileage,homeSearchForm.value.price)">
                     <option selected value="">Choisir</option>
                     <option *ngFor="let b of brands" [value]="b.id"
                     >
@@ -34,21 +28,21 @@
                 <select class="form-control"
                         formControlName="model"
                         *ngIf="this.homeSearchForm.value.brand"
-                        (change)="onGasolineSelected(homeSearchForm.value.brand, homeSearchForm.value.model,homeSearchForm.value.gasoline)"
+                        (change)="onFieldSelected(homeSearchForm.value.brand, homeSearchForm.value.model,homeSearchForm.value.gasoline,homeSearchForm.value.mileage,homeSearchForm.value.price)"
                         >
                     <option value="" selected>Choisir</option>
                     <option *ngFor="let m of modelsShowable" [value]="m.id"
                     >
                         {{m.name}}, {{m.brand}}
                     </option>
-                </select>
+                </select> 
         </div>
 
         <div class="p-3">  
-            <label>Gasoline</label>
+            <label>Carburant</label>
             <select class="form-control"
                     formControlName="gasoline"
-                    (change)="onGasolineSelected(homeSearchForm.value.brand, homeSearchForm.value.model,homeSearchForm.value.gasoline)"
+                    (change)="onFieldSelected(homeSearchForm.value.brand, homeSearchForm.value.model,homeSearchForm.value.gasoline,homeSearchForm.value.mileage,homeSearchForm.value.price)"
                     >
                 <option value="" selected>Choisir</option>
                 <option *ngFor="let g of gasolines" [value]="g.id"
@@ -57,6 +51,52 @@
                 </option>
             </select>
         </div>    
+
+        <div class="p-3 nouislider">  
+            <label>Kilométrage</label>
+
+            <nouislider [min]="0" [max]="20" [step]="0.5" [(ngModel)]="homeSearchForm.controls.mileageMin"></nouislider>
+
+            <!-- <select class="form-control"
+                    formControlName="mileageMin"
+                    
+                    >
+                <option value="" selected>Choisir</option>
+                <option *ngFor="let mil of mileages" [value]="g.id"
+                >
+                    {{g.name}}, {{g.id}}
+                </option>
+            </select> -->
+        </div> 
+
+        <div class="p-3">  
+            <label>Kilométrage Maximum</label>
+            <select class="form-control"
+                    formControlName="mileageMax"
+                    (change)="onFieldSelected(homeSearchForm.value.brand, homeSearchForm.value.model,homeSearchForm.value.gasoline,homeSearchForm.value.mileage,homeSearchForm.value.price)"
+                    >
+                <option value="" selected>Choisir</option>
+                <option *ngFor="let mil of mileages" [value]="g.id"
+                >
+                    {{g.name}}, {{g.id}}
+                </option>
+            </select>
+        </div> 
+
+        <div class="p-3">  
+            <label>Prix</label>
+            <select class="form-control"
+                    formControlName="price"
+                    (change)="onFieldSelected(homeSearchForm.value.brand, homeSearchForm.value.model,homeSearchForm.value.gasoline,homeSearchForm.value.mileage,homeSearchForm.value.price)"
+                    >
+                <option value="" selected>Choisir</option>
+                <option *ngFor="let g of gasolines" [value]="g.id"
+                >
+                    {{g.name}}, {{g.id}}
+                </option>
+            </select>
+        </div> 
+
     </div>
     </form>
 
@@ -66,6 +106,19 @@
 
 <h1>Annonces</h1>
 
+<div *ngIf="!homeSearchForm.dirty" class="container-fluid bg-3 text-center" style="border:solid orange;margin:auto">
+    <div class="row m-auto">
+        <div *ngFor="let adshow of ads" class="card  ml-2"  style="width: 18rem;">
+            <img class="card-img-top" src="..." alt="Card image cap">
+            <div class="card-body">
+            <h5 class="card-title">{{adshow.title}}</h5>
+            <p class="card-text">ads dé kon arrive example text to build on the card title and make up the bulk of the card's content.</p>
+            <a href="#" class="btn btn-primary">Go somewhere</a>
+            <p>{{adshow.mileage}}</p>
+            </div>
+        </div>
+    </div>
+</div>    
 
 <div class="container-fluid bg-3 text-center" style="border:solid orange;margin:auto">
     <div class="row m-auto">
@@ -75,6 +128,7 @@
             <h5 class="card-title">{{adshow.title}}</h5>
             <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
             <a href="#" class="btn btn-primary">Go somewhere</a>
+            <p>{{adshow.mileage}}</p>
             </div>
         </div>
     </div>
@@ -98,3 +152,5 @@
 <p *ngFor="let a of ads">
     {{a.title}} s'affiche sans condition
 </p>
+
+</div>

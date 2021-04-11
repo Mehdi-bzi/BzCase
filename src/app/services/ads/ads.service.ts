@@ -44,20 +44,32 @@ export class AdsService {
   //                           }, err => {
   //                             console.log(err);}
   //                         )
-
+ 
   // }
 
-  getAdsFiltered(vBrand, vModel, vGasoline){
-    return this.httpClient.get('http://127.0.0.1:8000/api/ads?brand='+vBrand+'&model='+vModel+'&gasoline='+vGasoline)
+  getAdsFiltered(vBrand, vModel, vGasoline,vMileage,vPrice){
+    return this.httpClient.get('http://127.0.0.1:8000/api/ads?brand='+vBrand+'&gasoline='+vGasoline+'&model='+vModel)
                           .subscribe(
                             res=>{
                               this.adsFil = res['hydra:member'];
                               this.adsFiltered.next(this.adsFil);
                             }, err => {
                               console.log("Alors l'erreur c'est : ",err);}
-                          )
+                          )                        
 
   }
+
+  // getAdsFilteredMil(vBrand, vModel, vGasoline,vMil){
+  //   return this.httpClient.get('http://127.0.0.1:8000/api/ads?brand='+vBrand+'&gasoline='+vGasoline+'&model='+vModel+'&mileage[gt]=5')
+  //                         .subscribe(
+  //                           res=>{
+  //                             this.adsFil = res['hydra:member'];
+  //                             this.adsFiltered.next(this.adsFil);
+  //                           }, err => {
+  //                             console.log("Alors l'erreur c'est : ",err);}
+  //                         )
+
+  // }
 
 
   // getAdsFiltered(vBrand){

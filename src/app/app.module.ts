@@ -1,3 +1,4 @@
+import { HeaderComponent } from './components/header/header.component';
 import { ModelService } from './services/model/model.service';
 import { BrandService } from './services/brand/brand.service';
 import { UserService } from './services/user/user.service';
@@ -23,6 +24,9 @@ import { AdsViewComponent } from './views/ads-view/ads-view.component';
 import { AdCreatorViewComponent } from './views/ad-creator-view/ad-creator-view.component';
 import { TableRowUserComponent } from './components/table-row-user/table-row-user.component';
 import { DashboardViewComponent } from './views/dashboard-view/dashboard-view.component';
+import { NouisliderModule } from 'ng2-nouislider';
+
+
 
 @NgModule({
   declarations: [
@@ -31,10 +35,11 @@ import { DashboardViewComponent } from './views/dashboard-view/dashboard-view.co
     AdsViewComponent,
     UsersViewComponent,
     UserCreatorViewComponent,
-    AdCreatorViewComponent,
+    AdCreatorViewComponent, 
     TableRowUserComponent,
     DashboardViewComponent,
-    UserSingleViewComponent
+    UserSingleViewComponent,
+    HeaderComponent,
 
   ], 
   imports: [
@@ -43,6 +48,7 @@ import { DashboardViewComponent } from './views/dashboard-view/dashboard-view.co
     HttpClientModule,
     ReactiveFormsModule,
     FormsModule,
+    NouisliderModule,
   ],
   providers: [
     AdsService,

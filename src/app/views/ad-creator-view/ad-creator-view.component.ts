@@ -119,12 +119,12 @@ export class AdCreatorViewComponent implements OnInit {
       'brand': ['', Validators.required],
       'garage': [''],
       'description': [''],
-      'price': [0],
+      'price': [],
       'photo': [[]],
       'model': ['', Validators.required],
       // 'dateCirculation': ['', [Validators.required, Validators.pattern(/^(0[1-9]|1[012])\/\d{4}$/)]],
       'dateCirculation': ['a'],
-      'mileage': [null],
+      'mileage': [],
       'gasoline': ['', Validators.required]
   })
 
