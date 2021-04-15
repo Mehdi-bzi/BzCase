@@ -24,7 +24,7 @@
                         <option *ngFor="let b of brands" [value]="b.id"
                         >
                         
-                            {{b.id}}
+                            {{b.name}}
                         </option>
                     </select>
             
@@ -40,7 +40,7 @@
                         <option value="" selected>Choisir</option>
                         <option *ngFor="let m of modelsShowable" [value]="m.id"
                         >
-                            {{m.name}}, {{m.brand}}
+                            {{m.name}}
                         </option>
                     </select> 
             </div>
@@ -54,7 +54,7 @@
                     <option value="" selected>Choisir</option>
                     <option *ngFor="let g of gasolines" [value]="g.id"
                     >
-                        {{g.name}}, {{g.id}}
+                        {{g.name}}
                     </option>
                 </select>
             </div>
@@ -73,27 +73,17 @@
                             homeSearchForm.value.price,
                             homeSearchForm.value.date)"></ngx-slider>
 
-            <!-- <select class="form-control"
-                    formControlName="mileageMin"
-                    
-                    >
-                <option value="" selected>Choisir</option>
-                <option *ngFor="let mil of mileages" [value]="g.id"
-                >
-                    {{g.name}}, {{g.id}}
-                </option>
-            </select> -->
         </div> 
 
         <div class="col-xl-3 col-md-5 col-sm-12">  
             <label class="d-flex w-100">Prix</label>
             <ngx-slider [options]="optionsPrice" formControlName="price"
                         (userChange)="onFieldSelected(homeSearchForm.value.brand, 
-                                              homeSearchForm.value.model,
-                                              homeSearchForm.value.gasoline,
-                                              homeSearchForm.value.mileage,
-                                              homeSearchForm.value.price,
-                                              homeSearchForm.value.date)"
+                            homeSearchForm.value.model,
+                            homeSearchForm.value.gasoline,
+                            homeSearchForm.value.mileage,
+                            homeSearchForm.value.price,
+                            homeSearchForm.value.date)"
             >
             </ngx-slider>
 
@@ -122,15 +112,17 @@
 
 <h1>Annonces</h1>
 
-<div *ngIf="!homeSearchForm.dirty" class="container-fluid bg-3 text-center" style="border:solid orange;margin:auto">
+<div *ngIf="!homeSearchForm.dirty" class="container-fluid bg-3 text-center m-2">
     <div class="row m-auto">
-        <div *ngFor="let adshow of ads" class="card  ml-2"  style="width: 18rem;">
-            <img class="card-img-top" src="..." alt="Card image cap">
+        <div *ngFor="let adshow of ads" class="card  m-auto mt-2"  style="width: 18rem;">
+            <img class="card-img-top" src="../../../assets/img/beetle.jpg" alt="Card image cap">
             <div class="card-body">
             <h5 class="card-title">{{adshow.title}}</h5>
             <p class="card-text">ads dé kon arrive example text to build on the card title and make up the bulk of the card's content.</p>
             <a href="#" class="btn btn-primary">Go somewhere</a>
-            <p>{{adshow.mileage}}</p>
+            <p>onInit km : {{adshow.mileage}}</p>
+            <p>onInit prix : {{adshow.price}}</p>
+            <p>onInit prix : {{adshow.dateCirculation | date}}</p>
             </div>
         </div>
     </div>
@@ -138,19 +130,19 @@
 
 <div class="container-fluid bg-3 text-center" style="border:solid orange;margin:auto">
     <div class="row m-auto">
-        <div *ngFor="let adshow of adsShowable" class="card  ml-2"  style="width: 18rem;">
-            <img class="card-img-top" src="..." alt="Card image cap">
+        <div *ngFor="let adshow of adsShowable" class="card  m-auto"  style="width: 18rem;">
+            <img class="card-img-top" src="../../../assets/img/beetle.jpg" alt="Card image cap">
             <div class="card-body">
             <h5 class="card-title">{{adshow.title}}</h5>
             <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
             <a href="#" class="btn btn-primary">Go somewhere</a>
-            <p>{{adshow.mileage}}</p>
+            <p>km : {{adshow.mileage}}</p>
+            <p>prix : {{adshow.price}}</p>
+            <p>prix : {{adshow.dateCirculation | date}}
             </div>
         </div>
     </div>
 
-<span>ad showable ={{adsShowable}}</span> <br>
-<span>ads ={{ads}}</span>
 <!-- <p *ngFor="let ad of adsShowable">
     {{ad.title}} /// {{ad.gasoline}}
     
@@ -160,13 +152,8 @@
     </a>
 </p> -->
 
-<button (click)="checkU()">test</button>
-
-<button (click)="checkAds()">test adds</button>
 
 
-<p *ngFor="let a of ads">
-    {{a.title}} s'affiche sans condition
-</p>
+
 
 </div>

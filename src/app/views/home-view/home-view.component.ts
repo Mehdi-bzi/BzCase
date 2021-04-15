@@ -36,13 +36,14 @@ export class HomeViewComponent implements OnInit {
     optionsPrice: Options = {
       floor: 1000,
       ceil: 50000,
+      step: 500
   
     };
 
     //Options pour le field date de mise en circulation 
     optionsDate: Options = {
       floor: 1987,
-      ceil: 2020,
+      ceil: 2021,
       step: 1
     };
 
@@ -114,10 +115,10 @@ export class HomeViewComponent implements OnInit {
       'brand': '', 
       'model': '',
       'gasoline': '',
-      'mileage': [[0,0]],
+      'mileage': [[0,120000]],
       'mileageMax': '',
-      'price': 1000,
-      'date' : [[1987,2020]]      
+      'price': [[1000,50000]],
+      'date' : [[1987,2021]]      
     });
 
  

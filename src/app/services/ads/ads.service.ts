@@ -48,7 +48,10 @@ export class AdsService {
   // }
 
   getAdsFiltered(vBrand,vModel,vGasoline,vMileage,vPrice, vDate){
-    return this.httpClient.get('http://127.0.0.1:8000/api/ads?brand='+vBrand+'&gasoline='+vGasoline+'&model='+vModel+'&mileage[lt]='+vMileage[1]+'&mileage[gt]='+vMileage[0]+'&price<='+vPrice+'&dateCirculation[before]='+vDate[1]+'-12-31&dateCirculation[after]='+vDate[0]+'-01-01')
+    return this.httpClient.get('http://127.0.0.1:8000/api/ads?brand='+vBrand+'&gasoline='+vGasoline+
+                                                            '&model='+vModel+'&mileage[lt]='+vMileage[1]+
+                                                            '&mileage[gt]='+vMileage[0]+'&price[between]='+vPrice[0]+'..'+vPrice[1]+
+                                                            '&dateCirculation[before]='+vDate[1]+'-12-31&dateCirculation[after]='+vDate[0]+'-01-01')
                           .subscribe(
                             res=>{
                               this.adsFil = res['hydra:member'];
