@@ -1,11 +1,3 @@
-
-
-<div style="border:none;background:rgb(196, 223, 255)" class="d-flex flex-row p-4">
-    <img class="p-1 mr-5" src="../../../assets/img/centrauto-logo350x104.png" alt="" width="350" height="104">
-</div>
-
-
-
 <div style="border:none;background:rgb(229, 241, 255)" class="d-flex p-1">
 
 
@@ -112,34 +104,34 @@
 
 <h1>Annonces</h1>
 
-<div *ngIf="!homeSearchForm.dirty" class="container-fluid bg-3 text-center m-2">
-    <div class="row m-auto">
-        <div *ngFor="let adshow of ads" class="card  m-auto mt-2"  style="width: 18rem;">
+<div *ngIf="!homeSearchForm.dirty" class="container-fluid col-xl-10 bg-3 text-center m-auto">
+    <div class="row">
+        <div *ngFor="let adshow of ads" class="card m-auto"  style="width: 18rem;">
             <img class="card-img-top" src="../../../assets/img/beetle.jpg" alt="Card image cap">
             <div class="card-body">
-            <h5 class="card-title">{{adshow.title}}</h5>
-            <p class="card-text">ads dé kon arrive example text to build on the card title and make up the bulk of the card's content.</p>
-            <a href="#" class="btn btn-primary">Go somewhere</a>
-            <p>onInit km : {{adshow.mileage}}</p>
-            <p>onInit prix : {{adshow.price}}</p>
-            <p>onInit prix : {{adshow.dateCirculation | date}}</p>
+                <h5 class="card-title">{{adshow.title}}</h5>
+                    <p class="card-text">ads dé kon arrive example text to build on the card title and make up the bulk of the card's content.</p>
+                    <a href="#" class="btn btn-primary">Go somewhere</a>
+                    <p>onInit km : {{adshow.mileage}}</p>
+                    <p>onInit prix : {{adshow.price}}</p>
+                    <p>onInit prix : {{adshow.dateCirculation | date}}</p>
             </div>
         </div>
     </div>
 </div>    
 
-<div class="container-fluid bg-3 text-center" style="border:solid orange;margin:auto">
-    <div class="row m-auto">
-        <div *ngFor="let adshow of adsShowable" class="card  m-auto"  style="width: 18rem;">
+<div class="container-fluid bg-3 col-xl-9 text-center m-auto">
+    <div class="row m-auto d-flex justify-content-around">
+        <div *ngFor="let adshow of adsShowable" class="card m-auto"  style="width: 18rem;">
             <img class="card-img-top" src="../../../assets/img/beetle.jpg" alt="Card image cap">
-            <div class="card-body">
-            <h5 class="card-title">{{adshow.title}}</h5>
-            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-            <a href="#" class="btn btn-primary">Go somewhere</a>
-            <p>km : {{adshow.mileage}}</p>
-            <p>prix : {{adshow.price}}</p>
-            <p>prix : {{adshow.dateCirculation | date}}
-            </div>
+                <div class="card-body mb-auto">
+                    <h5 class="card-title">{{adshow.title}}</h5>
+                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                            <a href="#" class="btn btn-primary">Go somewhere</a>
+                                <p>km : {{adshow.mileage}}</p>
+                                <p>prix : {{adshow.price}}</p>
+                                <p>prix : {{adshow.dateCirculation | date}}
+                </div>
         </div>
     </div>
 

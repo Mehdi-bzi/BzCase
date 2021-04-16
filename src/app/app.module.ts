@@ -29,6 +29,7 @@ import { NgxSliderModule } from '@angular-slider/ngx-slider';
 
 
 
+
 @NgModule({
   declarations: [
     AppComponent, 
@@ -50,7 +51,7 @@ import { NgxSliderModule } from '@angular-slider/ngx-slider';
     ReactiveFormsModule,
     FormsModule,
     NouisliderModule,
-    NgxSliderModule
+    NgxSliderModule,
   ],
   providers: [
     AdsService,

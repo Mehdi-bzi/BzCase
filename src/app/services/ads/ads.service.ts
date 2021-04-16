@@ -62,51 +62,39 @@ export class AdsService {
 
   }
 
-  // getAdsFilteredMil(vBrand, vModel, vGasoline,vMil){
-  //   return this.httpClient.get('http://127.0.0.1:8000/api/ads?brand='+vBrand+'&gasoline='+vGasoline+'&model='+vModel+'&mileage[gt]=5')
-  //                         .subscribe(
-  //                           res=>{
-  //                             this.adsFil = res['hydra:member'];
-  //                             this.adsFiltered.next(this.adsFil);
-  //                           }, err => {
-  //                             console.log("Alors l'erreur c'est : ",err);}
-  //                         )
-
-  // }
-
-
-  // getAdsFiltered(vBrand){
-  //   return this.httpClient.get('http://127.0.0.1:8000/api/ads?brand='+vBrand)
-  //                         .subscribe(
-  //                           res=>{
-  //                             this.adsFil = res;
-  //                             this.adsFiltered.next(this.adsFil);
-  //                           }, err => {
-  //                             console.log(err);}
-  //                         )
-
-  // }
-
-
-  getBrands(){
-    return this.httpClient.get('http://localhost:8000/api/brands.json')
+  getSingleAd(adId){
+    return this.httpClient.get('http://127.0.0.1:8000/api/ads/'+adId)
                           .subscribe(
                             res=>{
-                              this.brands = res;
-                              this.brandsSubject.next(this.brands);
+                              this.ads = res;
+                              this.adsSubject.next(this.ads);
                             }
                           )
   }
 
-  getModels(){
-    return this.httpClient.get('http://localhost:8000/api/models.json')
-                          .subscribe(
-                            res=>{
-                              this.models = res;
-                              this.modelsSubject.next(this.models);
-                            }
-                          )
-  }
+
+
+
+
+  // getBrands(){
+  //   return this.httpClient.get('http://localhost:8000/api/brands.json')
+  //                         .subscribe(
+  //                           res=>{
+  //                             this.brands = res;
+  //                             this.brandsSubject.next(this.brands);
+  //                           }
+  //                         )
+  // }
+
+  // getModels(){
+  //   return this.httpClient.get('http://localhost:8000/api/models.json')
+  //                         .subscribe(
+  //                           res=>{
+  //                             this.models = res;
+  //                             this.modelsSubject.next(this.models);
+  //                           }
+  //                         )
+  // }
 
   addAd(AdToAdd: any): Observable<any>{
     const headers = { 'content-type': 'application/json'}

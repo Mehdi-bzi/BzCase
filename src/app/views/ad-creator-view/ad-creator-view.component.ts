@@ -9,6 +9,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 
+
 @Component({
   selector: 'app-ad-creator-view',
   templateUrl: './ad-creator-view.component.html',
@@ -35,13 +36,6 @@ export class AdCreatorViewComponent implements OnInit {
   gasolineSub: Subscription;
 
   adObject: Object;
-
-    // gasolines: Array<[Object]>;
-
-  // adSubscription: Subscription;
-  
-
-  // gasolineSubscription: Subscription;
 
   newAdForm: FormGroup;
 
